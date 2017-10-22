@@ -26,7 +26,8 @@
     }
   }
 
-  window.console.log = log('#13770a')
+  window.log = window.console.log = log('#13770a')
+
   window.console.error = log('#ff0000')
   window.onerror = function (msg, url, lineNo, columnNo, error) {
     var string = msg.toLowerCase()

@@ -9,15 +9,17 @@
     };
 
     function append (messageRaw) {
-        let message = typeof messageRaw === 'object'
+        var message = typeof messageRaw === 'object'
           ? JSON.stringify(message)
           : message
 
+        document.body.append(typeof messageRaw)
+
         if (document.body) {
-            document.body.append(message);
+            document.body.append(messageRaw);
         }
         else {
-            setTimeout(append, 100, message);
+            setTimeout(append, 100, messageRaw);
         }
     }
 

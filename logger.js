@@ -1,65 +1,51 @@
 (function () {
-    var _console = window.console;
-    var _methods = {
-        log: window.console.log,
-        error: window.console.error,
-        info: window.console.info,
-        debug: window.console.debug,
-        clear: window.console.clear,
-    };
-
-    function append (messageRaw) {
-        var message = typeof messageRaw === 'object'
-          ? JSON.stringify(message)
-          : message
-
-        document.body.append(typeof messageRaw)
-
-        if (document.body) {
-            document.body.append(messageRaw);
-        }
-        else {
-            setTimeout(append, 100, messageRaw);
-        }
-    }
-
-    function clear () {
-        if (document.body) {
-            document.body.innerHtml = null;
-        }
-        _methods.clear.call(_console);
-    };
-
-    function message (text, color, $message) {
-        $message = document.createElement('p');
-        $message.style.color = color || '#000000';
-        $message.innerText = text;
-        return $message;
-    }
-
-    function write (key, color) {
-        return function () {
-            Function.prototype.apply.call(_methods[key], _console, arguments);
-            append(message(Array.prototype.slice.call(arguments).join(' '), color));
-        };
-    }
-
-    window.console.clear = clear;
-    window.console.error = write('error', '#ff0000');
-    window.console.log = write('log');
-    window.console.info = write('info');
-    window.console.debug = write('debug');
-
-    function errorHandler (e) {
-        e.preventDefault();
-        console.error(e.message);
-        return true;
-    }
-
-    if (window.attachEvent) {
-        window.attachEvent('onerror', errorHandler);
+  function append (message) {
+    if (document.body) {
+      document.body.append(message)
     }
     else {
-        window.addEventListener('error', errorHandler, true);
+      setTimeout(append, 100, message)
     }
-}) ();
+  }
+
+
+  function message (text, color, $message) {
+    $message = document.createElement('p')
+    $message.style.color = color || '#000000'
+    $message.innerText = text
+    return $message
+  }
+
+  function log (color) {
+    return function (elementToLog) {
+      var cast = typeof elementToLog === 'function'
+        ? message(elementToLog.toString(), color)
+        : message(JSON.stringify(elementToLog), color)
+
+      append(cast)
+    }
+  }
+
+  window.console.log = log('#13770a')
+  window.console.error = log('#ff0000')
+  window.onerror = function (msg, url, lineNo, columnNo, error) {
+    var string = msg.toLowerCase()
+    var substring = 'script error'
+
+    if (string.indexOf(substring) > -1){
+      append('Script Error: See Browser Console for Detail')
+    } else {
+      var message = [
+        'Message: ' + msg,
+        'URL: ' + url,
+        'Line: ' + lineNo,
+        'Column: ' + columnNo,
+        'Error object: ' + JSON.stringify(error)
+      ].join(' - ')
+
+      append(message)
+    }
+
+    return false
+  }
+}) ()

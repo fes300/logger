@@ -35,15 +35,14 @@
     if (string.indexOf(substring) > -1){
       append('Script Error: See Browser Console for Detail')
     } else {
-      var message = [
-        'Message: ' + msg,
-        'URL: ' + url,
-        'Line: ' + lineNo,
-        'Column: ' + columnNo,
-        'Error object: ' + JSON.stringify(error)
-      ].join(' - ')
+      var message = {
+        'message:': msg,
+        'colum:': columnNo,
+        'line:': lineNo,
+        'error:': JSON.stringify(error)
+      }
 
-      append(message)
+      window.console.error(message)
     }
 
     return false

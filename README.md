@@ -3,4 +3,4 @@ logger for jsFiddle
  
  ## rawgit endpoint:
  
- `https://rawgit.com/fes300/logger/master/logger.js`
+ `https://cdn.jsdelivr.net/gh/fes300/logger/logger.js`

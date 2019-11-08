@@ -1,6 +1,6 @@
 # logger
 logger for jsFiddle
  
- ## rawgit endpoint:
+ ## jsdelivr endpoint:
  
- `https://rawgit.com/fes300/logger/master/logger.js`
+ `https://cdn.jsdelivr.net/gh/fes300/logger@master/logger.js`
